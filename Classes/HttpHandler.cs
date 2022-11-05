@@ -2,15 +2,15 @@
 using System.Net;
 using System.Text;
 
-namespace CServer
+namespace CServer.Classes
 {
-    internal class HttpListenerClass
+    internal class HttpHandler
     {
         // Code will be commented and documented later :)
-        public static void HandleHTTPResquest()
+        public static void HandleHTTPRequest(int port)
         {
             using var listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost:8000/");
+            listener.Prefixes.Add($"http://localhost:{port}/");
 
             listener.Start();
 

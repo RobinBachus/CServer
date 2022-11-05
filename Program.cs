@@ -1,4 +1,4 @@
-﻿using static CServer.HttpListenerClass;
+﻿using CServer.Classes;
 
 
 namespace CServer
@@ -7,9 +7,9 @@ namespace CServer
     {
         static void Main(string[] args)
         {
-            HandleHTTPResquest();
+            // The port where the server will be listening 
+            int port = 8000;
+            HttpHandler.HandleHTTPResquest(port);
         }
-
-        
     }
 }
