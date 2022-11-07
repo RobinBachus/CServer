@@ -1,6 +1,6 @@
 # CServer
 
-## _DON'T INSTALL THIS DIRECTLY!_
+## *DON'T INSTALL THIS DIRECTLY!*
 
 This repo is meant as a submodule of [CSharper Practice](https://github.com/RobinBachus/CSharper).  
 Download that and run:
