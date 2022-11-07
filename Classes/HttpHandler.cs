@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CServer.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 
@@ -7,50 +9,66 @@ namespace CServer.Classes
     internal class HttpHandler
     {
         // Code will be commented and documented later :)
-        public static void HandleHTTPRequest(int port)
+        public static RequestData GetHTTPRequest(HttpListener listener)
         {
-            using var listener = new HttpListener();
-            listener.Prefixes.Add($"http://localhost:{port}/");
+            HttpListenerContext context = listener.GetContext();
+            HttpListenerRequest req = context.Request;
 
-            listener.Start();
 
-            Console.WriteLine("Listening on port 8000...");
-
-            while (true)
+            if (req.HttpMethod == "POST")
             {
-                HttpListenerContext context = listener.GetContext();
-                HttpListenerRequest req = context.Request;
+                Console.WriteLine($"Received request for {req.Url}");
+                Console.WriteLine($"from {req.UrlReferrer}");
+                RequestData content = ConvertRequestContent(req, context);
 
-                if (req.HttpMethod == "POST")
+                return content;
+            }
+
+            // Disregard CORS preflight requests
+            else if (req.HttpMethod == "OPTIONS")
+            {
+                RequestData content = new(context)
                 {
-                    Console.WriteLine($"Received request for {req.Url}");
-                    object? content = GetRequestContent(req);
-                    Console.WriteLine($"Request content: \n{content}\n");
+                    Module = Modules.Preflight,
+                    Submodule = 0,
+                };
+                return content;
+            }
+            else
+            {
+                throw new Exception("How did you get here?");
+            }
+        }
 
-                    using HttpListenerResponse resp = context.Response;
-                    resp.Headers.Set("Content-Type", "text/plain");
-                    AddCorsHeaders(resp);
+        public static void SetResponse(RequestData request)
+        {
+            HttpListenerContext context = request.Context;
+            using HttpListenerResponse response = context.Response;
+            AddCorsHeaders(response);
 
-                    string data = "Hello there!";
-                    byte[] buffer = Encoding.UTF8.GetBytes(data);
-                    resp.ContentLength64 = buffer.Length;
+            if (request.Module == Modules.Preflight)
+            {
+                response.StatusCode = (int)HttpStatusCode.OK;
+                response.StatusDescription = "Status OK";
+            }
 
-                    using Stream ros = resp.OutputStream;
+            else
+            {
+                response.Headers.Set("Content-Type", "text/plain");
+                string output;
+
+                if (request.Result != null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.StatusDescription = "Status OK";
+
+                    output = request.Result.ToString()
+                        ?? throw new Exception("Result.ToString() is null");
+                    byte[] buffer = Encoding.UTF8.GetBytes(output );
+                    response.ContentLength64 = buffer.Length;
+
+                    using Stream ros = response.OutputStream;
                     ros.Write(buffer, 0, buffer.Length);
-                }
-
-                // Disregard CORS preflight requests
-                else if (req.HttpMethod == "OPTIONS")
-                {
-                    using HttpListenerResponse resp = context.Response;
-
-                    resp.StatusCode = (int)HttpStatusCode.OK;
-                    resp.StatusDescription = "Status OK";
-                    AddCorsHeaders(resp);
-                }
-                else
-                {
-                    Console.WriteLine("How did you get here?");
                 }
             }
         }
@@ -65,17 +83,18 @@ namespace CServer.Classes
         }
 
         // Retrieves the content from an HTTP request
-        private static object? GetRequestContent(HttpListenerRequest request)
+        private static RequestData ConvertRequestContent(HttpListenerRequest request, HttpListenerContext context)
         {
             string contentString;
-            using Stream receiveStream = request.InputStream;
-            using StreamReader readStream = new(receiveStream, Encoding.UTF8);
+            Stream receiveStream = request.InputStream;
+            StreamReader readStream = new(receiveStream, Encoding.UTF8);
             contentString = readStream.ReadToEnd();
-            object? requestContent = JsonConvert.DeserializeObject(contentString);
+            RequestData? requestContent = JsonConvert.DeserializeObject<RequestData>(contentString);
             if (requestContent == null)
             {
-                return null;
+                throw new Exception("request content was empty");
             }
+            requestContent.Context = context;
             return requestContent;
         }
     }
