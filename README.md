@@ -5,10 +5,10 @@
 This repo is meant as a submodule of [CSharper Practice](https://github.com/RobinBachus/CSharper).  
 Download that and run:
 
-```shell
-git submodule update --init --recursive
-cd server/
-git pull master
+```powershell
+PS> git submodule update --init --recursive
+PS> cd server/
+PS server> git pull origin master
 ```
 
 This will put the source code of this project into 'server/'.
