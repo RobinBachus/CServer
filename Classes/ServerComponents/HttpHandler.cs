@@ -1,10 +1,9 @@
 ﻿using CServer.Interfaces;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 
-namespace CServer.Classes
+namespace CServer.Classes.ServerComponents
 {
     internal class HttpHandler
     {
@@ -30,13 +29,19 @@ namespace CServer.Classes
                 RequestData content = new(context)
                 {
                     Module = Modules.Preflight,
-                    Submodule = 0,
                 };
                 return content;
             }
             else
             {
-                throw new Exception("How did you get here?");
+                RequestData content = new(context)
+                {
+                    Module = Modules.Undefined,
+                    StatusCode = HttpStatusCode.MethodNotAllowed,
+                    StatusDescription = "Method Not Allowed"
+                };
+
+                return content;
             }
         }
 
@@ -44,27 +49,25 @@ namespace CServer.Classes
         {
             HttpListenerContext context = request.Context;
             using HttpListenerResponse response = context.Response;
+            response.StatusCode = (int)request.StatusCode;
+            response.StatusDescription = request.StatusDescription;
             AddCorsHeaders(response);
 
-            if (request.Module == Modules.Preflight)
-            {
-                response.StatusCode = (int)HttpStatusCode.OK;
-                response.StatusDescription = "Status OK";
-            }
-
-            else
+            if (request.Module != Modules.Preflight)
             {
                 response.Headers.Set("Content-Type", "text/plain");
                 string output;
 
                 if (request.Result != null)
                 {
-                    response.StatusCode = (int)HttpStatusCode.OK;
-                    response.StatusDescription = "Status OK";
-
+                    // If the status code is above 300 an error has occurred
+                    if (request.StatusCode < HttpStatusCode.Ambiguous)
+                    {
+                        Information.LogRequest(request);
+                    }
                     output = request.Result.ToString()
-                        ?? throw new Exception("Result.ToString() is null");
-                    byte[] buffer = Encoding.UTF8.GetBytes(output );
+                        ?? throw new NullReferenceException("Result.ToString() is null");
+                    byte[] buffer = Encoding.UTF8.GetBytes(output);
                     response.ContentLength64 = buffer.Length;
 
                     using Stream ros = response.OutputStream;
