@@ -10,11 +10,23 @@ namespace CServer.Classes.ServerComponents
         /// </summary>
         /// <param name="exception">The exception that got thrown</param>
         /// <param name="environment">A message that should describe where the exception was caught</param>
+        /// <param name="request">
+        ///     Give a <see cref="RequestData"></see> object to set the status and result in case of errors
+        /// </param>
+        /// <param name="statusCode">
+        ///     The status code that should be set on the <see cref="RequestData"></see>.
+        ///     <para>
+        ///     The status description will be automatically inferred from this code.
+        ///     </para>
+        ///     <para>
+        ///     Default is "<see langword="500"></see>"
+        ///     </para>
+        /// </param>
         /// <param name="displayStackTrace">
-        /// If the stack trace should be printed.
-        /// <para>
-        /// Default is <see langword="true"></see>
-        /// </para>
+        ///     If the stack trace should be printed.
+        ///     <para>
+        ///     Default is "<see langword="true"></see>"
+        ///     </para>
         /// </param>
 		public static RequestData? LogException(Exception exception, string environment, RequestData? request = null, int statusCode = 500, bool displayStackTrace = true)
         {
@@ -41,6 +53,10 @@ namespace CServer.Classes.ServerComponents
             }
             Console.ResetColor();
             Console.WriteLine("\n");
+            if (request != null)
+            {
+                return SetRequestStatus(request, statusCode);
+            }
             return null;
         }
 
@@ -70,10 +86,10 @@ namespace CServer.Classes.ServerComponents
                 {501, "Not implemented" }
             };
 
-            request.Result = "500 Internal server error";
-            request.StatusCode = HttpStatusCode.InternalServerError;
-            request.StatusDescription = "Internal server error";
-            Console.WriteLine("Sent '500 Internal server error' to request origin");
+            request.Result = $"{status} {descriptions[status]}";
+            request.StatusCode = (HttpStatusCode)status;
+            request.StatusDescription = descriptions[status];
+            Console.WriteLine($"Sent '{status} {descriptions[status]}' to request origin");
             Console.WriteLine("\n-------------------------------------\n");
 
             return request;

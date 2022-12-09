@@ -37,6 +37,7 @@ namespace CServer
 
                 try
                 {
+                    // Process the request in the appropriate module
                     switch (requestData.Module)
                     {
                         case Modules.Preflight:
@@ -49,16 +50,18 @@ namespace CServer
                             BooleanOperations booleanOperations = new();
                             requestData = booleanOperations.GetResult(requestData);
                             break;
+                        // Not implemented 
                         case Modules.RandomGenerator:
                             RandomGenerator randomGenerator = new();
                             requestData = randomGenerator.GetResult(requestData);
                             break;
+                        // Not implemented 
                         case Modules.Converter:
                             Converter converter = new();
                             requestData = converter.GetResult(requestData);
                             break;
                         default:
-                            break;
+                            throw new NotImplementedException("Request module was not recognized");
                     }
                 }
                 catch (NotImplementedException ex)
@@ -81,7 +84,7 @@ namespace CServer
                 }
                 finally
                 {
-                    // Process the request in the appropriate module
+                    // Send response to request origin
                     HttpHandler.SetResponse(requestData);
                 }
             }

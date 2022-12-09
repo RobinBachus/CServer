@@ -28,7 +28,7 @@ namespace CServer.Classes.ModuleClasses
                 "^" => Math.Pow(a, b),
                 "√" => Math.Sqrt(a),
                 "π" => Math.Round(PI, Convert.ToInt32(a)),
-                _ => throw new NotImplementedException($"Operator {@operator} not recognized"),
+                _ => throw new NotImplementedException($"Operator '{@operator}' not recognized"),
             };
             return request;
         }
