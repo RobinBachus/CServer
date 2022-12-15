@@ -13,21 +13,14 @@ namespace CServer.Classes.ModuleClasses
                 throw new NullReferenceException("Parameters array is null");
             }
 
-            Information.LogRequest(request);
-
             BooleanOparationsParamList paramList = new(request);
             bool result;
 
             if (paramList.mode == BooleanOparationsParamList.Mode.numbers)
             {
                 double a = Convert.ToDouble(paramList.param1);
-                double b = 0;
-                if (paramList.param2 != null)
-                {
-                    b = Convert.ToDouble(paramList.param2);
-                }
-
-                // TODO: Add remaining operators from plan list
+                double b = Convert.ToDouble(paramList.param2);
+                
                 result = paramList.@operator switch
                 {
                     "==" => a == b,
@@ -52,6 +45,11 @@ namespace CServer.Classes.ModuleClasses
             return request;
         }
 
+        /// <summary>
+        /// Tests if a number is prime
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
         protected static bool IsPrime(double a)
         {
             if (a <= 1) return false;

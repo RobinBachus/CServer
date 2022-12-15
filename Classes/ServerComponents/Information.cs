@@ -60,9 +60,13 @@ namespace CServer.Classes.ServerComponents
             return null;
         }
 
+        /// <summary>
+        /// Log the request's values
+        /// </summary>
+        /// <param name="request">The request to log</param>
         public static void LogRequest(RequestData request)
         {
-            Console.WriteLine($"\nModule: {request.Module}");
+            Console.WriteLine($"\nModule: {request.Module} ({(int)request.Module})");
             if ((!(request.Parameters == null)) && request.Parameters.Length > 0)
             {
                 for (int i = 0; i < request.Parameters.Length; i++)
@@ -78,6 +82,15 @@ namespace CServer.Classes.ServerComponents
             Console.WriteLine("\n-------------------------------------\n");
         }
 
+        /// <summary>
+        /// Set the status code and description of a request on which an exception occurred
+        /// <para>
+        /// The description will be inferred from the status code
+        /// </para>
+        /// </summary>
+        /// <param name="request">The request that needs the status code and description</param>
+        /// <param name="status">The status code as an integer</param>
+        /// <returns>The modified request</returns>
         private static RequestData SetRequestStatus(RequestData request, int status)
         {
             Dictionary<int, string> descriptions = new()

@@ -7,7 +7,11 @@ namespace CServer.Classes.ServerComponents
 {
     internal class HttpHandler
     {
-        // Code will be commented and documented later :)
+        /// <summary>
+        /// If the HTTP listener receives a request, this function will check the type (Preflight or User request) and map the request to a <see cref="RequestData"/> object
+        /// </summary>
+        /// <param name="listener"></param>
+        /// <returns>The mapped <see cref="RequestData"/> object</returns>
         public static RequestData GetHTTPRequest(HttpListener listener)
         {
             HttpListenerContext context = listener.GetContext();
@@ -45,6 +49,7 @@ namespace CServer.Classes.ServerComponents
             }
         }
 
+        // TODO: document function
         public static void SetResponse(RequestData request)
         {
             HttpListenerContext context = request.Context;
@@ -76,6 +81,7 @@ namespace CServer.Classes.ServerComponents
             }
         }
 
+        // TODO: document function
         // Adds CORS headers to allow cross origin HTTP requests
         private static void AddCorsHeaders(HttpListenerResponse response)
         {
@@ -85,6 +91,7 @@ namespace CServer.Classes.ServerComponents
             response.AppendHeader("Access-Control-Allow-Origin", "*");
         }
 
+        // TODO: document function
         // Retrieves the content from an HTTP request
         private static RequestData ConvertRequestContent(HttpListenerRequest request, HttpListenerContext context)
         {

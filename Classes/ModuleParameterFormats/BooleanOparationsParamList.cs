@@ -2,18 +2,19 @@
 
 namespace CServer.Classes.ModuleParameterFormats
 {
-    internal class BooleanOparationsParamList
+    internal class BooleanOparationsParamList: ParamListBase
     {
         public enum Mode
         {
             numbers,
             text
         }
+
         public BooleanOparationsParamList(RequestData request) 
         {
             if (request.Parameters == null)
             {
-                throw new NullReferenceException("No parameters were given");
+                throw new FormatException("No parameters were given");
             }
 
             this.param1 = request.Parameters[0];
@@ -23,17 +24,15 @@ namespace CServer.Classes.ModuleParameterFormats
             this.flag = Convert.ToBoolean(request.Parameters[4]);
            
             if (this.param1 == null || this.param1 == "") 
-                throw (new NullReferenceException("First field can't be empty"));
+                throw (new FormatException("First field can't be empty"));
 
             if (this.param2 == "")
                 this.param2 = null;
-            
-            if (this.param2 == null && this.mode == Mode.text)
+
+            if (this.param2 == null && !IsSingleInputOpaerator(this.@operator))
             {
-
+                throw new FormatException("Second field empty on an operator that is not single input");
             }
-
-
         }
 
         public readonly string param1;

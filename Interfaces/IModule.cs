@@ -9,7 +9,7 @@ namespace CServer.Interfaces
         /// Get the result for the request
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns>The request with the result value set</returns>
         /// <exception cref="NullReferenceException"></exception>
         /// <exception cref="NotImplementedException"></exception>
         public RequestData GetResult(RequestData request);

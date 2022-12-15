@@ -1,4 +1,5 @@
-﻿using CServer.Classes.ServerComponents;
+﻿using CServer.Classes.ModuleParameterFormats;
+using CServer.Classes.ServerComponents;
 using CServer.Interfaces;
 
 namespace CServer.Classes.ModuleClasses
@@ -7,6 +8,7 @@ namespace CServer.Classes.ModuleClasses
     {
         const decimal PI = 3.1415926535897932384626433832M;
 
+        // TODO: document function
         public RequestData GetResult(RequestData request)
         {
             if (request.Parameters == null)
@@ -14,9 +16,11 @@ namespace CServer.Classes.ModuleClasses
                 throw new NullReferenceException("Parameters array is null");
             }
 
-            double a = Convert.ToDouble(request.Parameters[0]);
-            double b = Convert.ToDouble(request.Parameters[1]);
-            string @operator = Convert.ToString(request.Parameters[2]);
+            CalculationsParamList paramList = new(request);
+
+            double a = paramList.param1;
+            double b = paramList.param2;
+            string @operator = paramList.@operator;
 
             request.Result = @operator switch
             {

@@ -34,7 +34,7 @@ namespace CServer
                     Information.LogException(ex, "Failed to get request data due to an exception:");
                     break;
                 }
-
+                    
                 try
                 {
                     // Process the request in the appropriate module
@@ -66,21 +66,11 @@ namespace CServer
                 }
                 catch (NotImplementedException ex)
                 {
-                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:");
-                    requestData.Result = "501 Not implemented";
-                    requestData.StatusCode = HttpStatusCode.NotImplemented;
-                    requestData.StatusDescription = "Not implemented";
-                    Console.WriteLine("Sent '501 Not implemented' to request origin");
-                    Console.WriteLine("\n-------------------------------------\n");
+                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:", requestData, 501);
                 }
                 catch (Exception ex)
                 {
-                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:");
-                    requestData.Result = "500 Internal server error";
-                    requestData.StatusCode= HttpStatusCode.InternalServerError;
-                    requestData.StatusDescription = "Internal server error";
-                    Console.WriteLine("Sent '500 Internal server error' to request origin");
-                    Console.WriteLine("\n-------------------------------------\n");
+                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:", requestData);
                 }
                 finally
                 {
