@@ -80,9 +80,14 @@ namespace CServer
                             throw new NotImplementedException("Request module was not recognized");
                     }
                 }
+                catch (FormatException ex)
+                {
+                    // A non-disabled field was empty or invalid
+                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:", requestData, HttpStatusCode.BadRequest);
+                }
                 catch (NotImplementedException ex)
                 {
-                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:", requestData, 501);
+                    Information.LogException(ex, $"Failed to handle {requestData.Module} request:", requestData, HttpStatusCode.NotImplemented);
                 }
                 catch (Exception ex)
                 {

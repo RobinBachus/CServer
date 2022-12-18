@@ -21,7 +21,7 @@ namespace CServer.Classes.ServerComponents
         ///     The status description will be automatically inferred from this code.
         ///     </para>
         ///     <para>
-        ///     Default is "<see langword="500"></see>"
+        ///     Default is "<see cref="HttpStatusCode.InternalServerError"/> (=500)"
         ///     </para>
         /// </param>
         /// <param name="displayStackTrace">
@@ -34,7 +34,7 @@ namespace CServer.Classes.ServerComponents
         /// If <paramref name="request"/> was not null then the altered <see cref="RequestData"/> object will be returned.
         /// Otherwise it will return null.
         /// </returns>
-		public static RequestData? LogException(Exception exception, string environment, RequestData? request = null, int statusCode = 500, bool displayStackTrace = true)
+		public static RequestData? LogException(Exception exception, string environment, RequestData? request = null, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, bool displayStackTrace = true)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"\n{exception.GetType()}: {environment}");
@@ -95,18 +95,19 @@ namespace CServer.Classes.ServerComponents
         /// </para>
         /// </summary>
         /// <param name="request">The request that needs the status code and description</param>
-        /// <param name="status">The status code as an integer</param>
+        /// <param name="status">The status code</param>
         /// <returns>The modified request</returns>
-        private static RequestData SetRequestStatus(RequestData request, int status)
+        private static RequestData SetRequestStatus(RequestData request, HttpStatusCode status)
         {
-            Dictionary<int, string> descriptions = new()
+            Dictionary<HttpStatusCode, string> descriptions = new()
             {
-                {500, "Internal server error" },
-                {501, "Not implemented" }
+                {HttpStatusCode.BadRequest, "Bad request" },
+                {HttpStatusCode.InternalServerError, "Internal server error" },
+                {HttpStatusCode.NotImplemented, "Not implemented" }
             };
 
             request.Result = $"{status} {descriptions[status]}";
-            request.StatusCode = (HttpStatusCode)status;
+            request.StatusCode = status;
             request.StatusDescription = descriptions[status];
             Console.WriteLine($"Sent '{status} {descriptions[status]}' to request origin");
             Console.WriteLine("\n-------------------------------------\n");
