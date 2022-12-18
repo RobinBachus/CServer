@@ -34,7 +34,7 @@ namespace CServer
             using var listener = new HttpListener();
             listener.Prefixes.Add($"http://localhost:{port}/");
             listener.Start();
-            Console.WriteLine("Listening on port 8000...");
+            Console.WriteLine($"Listening on port {port}...");
             Console.WriteLine("\n-------------------------------------\n");
 
             while (true) {
