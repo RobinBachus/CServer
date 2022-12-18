@@ -9,7 +9,7 @@ namespace CServer.Classes.ModuleClasses
         // TODO: implement RandomGenerator class
         public RequestData GetResult(RequestData request)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("RandomGenerator class not yet available");
         }
     }
 }

@@ -4,12 +4,27 @@ using CServer.Interfaces;
 using System.Net;
 using System.Runtime.CompilerServices;
 
+// Allow test project to test internal class methods
 [assembly: InternalsVisibleTo("CServerTests")]
 
 namespace CServer
 {
+    /// <summary>
+    /// This program is the back-end of a <see href="https://github.com/RobinBachus/CSharper">website</see> that allows users to test many interactions with c# 
+    /// (and is made purely for me to learn more about c# and web development).
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// <para>
+        ///     When the Main function is started, it starts an <see cref="HttpListener"/> and enters a loop. 
+        ///     In this loop the program will wait until a request is received. </para>
+        /// <para>
+        ///     Once a request is received it will be mapped to a <see cref="RequestData"/> object 
+        ///     and handled by the appropriate <see cref="IModule">Module Class</see>.
+        /// </para>
+        ///     Finally a response is sent to the browser containing the results.
+        /// </summary>
         static void Main(string[] args)
         {
             // The port where the server will be listening on
@@ -32,7 +47,7 @@ namespace CServer
                 catch (Exception ex)
                 {
                     Information.LogException(ex, "Failed to get request data due to an exception:");
-                    break;
+                    continue;
                 }
                     
                 try
@@ -40,6 +55,7 @@ namespace CServer
                     // Process the request in the appropriate module
                     switch (requestData.Module)
                     {
+                        // Disregard CORS preflight requests
                         case Modules.Preflight:
                             break;
                         case Modules.Calculations:

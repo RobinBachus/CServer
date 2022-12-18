@@ -1,8 +1,10 @@
-﻿using CServer.Interfaces;
-using System.Net;
+﻿using System.Net;
 
 namespace CServer.Classes.ServerComponents
 {
+    /// <summary>
+    /// A class that holds logging and debugging methods
+    /// </summary>
     internal class Information
     {
         /// <summary>
@@ -28,6 +30,10 @@ namespace CServer.Classes.ServerComponents
         ///     Default is "<see langword="true"></see>"
         ///     </para>
         /// </param>
+        /// <returns>
+        /// If <paramref name="request"/> was not null then the altered <see cref="RequestData"/> object will be returned.
+        /// Otherwise it will return null.
+        /// </returns>
 		public static RequestData? LogException(Exception exception, string environment, RequestData? request = null, int statusCode = 500, bool displayStackTrace = true)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -61,7 +67,7 @@ namespace CServer.Classes.ServerComponents
         }
 
         /// <summary>
-        /// Log the request's values
+        /// Logs a request's values
         /// </summary>
         /// <param name="request">The request to log</param>
         public static void LogRequest(RequestData request)

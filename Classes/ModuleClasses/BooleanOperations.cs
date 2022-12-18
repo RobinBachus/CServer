@@ -4,6 +4,12 @@ using CServer.Interfaces;
 
 namespace CServer.Classes.ModuleClasses
 {
+    /// <summary>
+    ///     <inheritdoc cref="IModule"/>
+    /// <para>
+    ///     This is the class for the BooleanOperations tab/ <see cref="RequestData.Module">Module</see>
+    /// </para>
+    /// </summary>
     internal class BooleanOperations : IModule
     {
         public RequestData GetResult(RequestData request)
@@ -48,8 +54,8 @@ namespace CServer.Classes.ModuleClasses
         /// <summary>
         /// Tests if a number is prime
         /// </summary>
-        /// <param name="a"></param>
-        /// <returns></returns>
+        /// <param name="a">The number to test</param>
+        /// <returns><see cref="bool">true</see> if <paramref name="a"/> is prime and <see cref="bool">false</see> if not</returns>
         protected static bool IsPrime(double a)
         {
             if (a <= 1) return false;

@@ -36,7 +36,19 @@ namespace CServer.Classes.ServerComponents
         public Modules Module { get; set; }
         public string[]? Parameters { get; set; }
         public object? Result { get; set; }
+        /// <summary>
+        ///     <inheritdoc/> 
+        /// <para>
+        ///     The default value is <see cref="HttpStatusCode.OK"/>
+        /// </para>
+        /// </summary> 
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+        /// <summary>
+        ///     <inheritdoc/> 
+        /// <para>
+        ///     The default value is <see langword="'Status OK'"/>
+        /// </para>
+        /// </summary>
         public string StatusDescription { get; set; } = "Status OK";
         public HttpListenerContext Context { get; set; }
     }

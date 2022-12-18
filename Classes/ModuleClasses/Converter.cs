@@ -9,7 +9,7 @@ namespace CServer.Classes.ModuleClasses
         // TODO: implement Converter class
         public RequestData GetResult(RequestData request)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Converter class not yet available");
         }
     }
 }

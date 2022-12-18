@@ -4,11 +4,16 @@ using CServer.Interfaces;
 
 namespace CServer.Classes.ModuleClasses
 {
+    /// <summary>
+    ///     <inheritdoc cref="IModule"/>
+    /// <para>
+    ///     This is the class for the Calculations tab/ <see cref="RequestData.Module">Module</see>
+    /// </para>
+    /// </summary>
     internal class Calculations : IModule
     {
         const decimal PI = 3.1415926535897932384626433832M;
 
-        // TODO: document function
         public RequestData GetResult(RequestData request)
         {
             if (request.Parameters == null)
@@ -21,6 +26,9 @@ namespace CServer.Classes.ModuleClasses
             double a = paramList.param1;
             double b = paramList.param2;
             string @operator = paramList.@operator;
+
+            // TODO: Add a way to get more digits after pi (for π operator) 
+            // This will probably treat pi as a string
 
             request.Result = @operator switch
             {
