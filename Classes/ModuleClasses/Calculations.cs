@@ -14,7 +14,7 @@ namespace CServer.Classes.ModuleClasses
     {
         const decimal PI = 3.1415926535897932384626433832M;
 
-        public RequestData GetResult(RequestData request)
+        public void GetResult(RequestData request)
         {
             if (request.Parameters == null)
             {
@@ -42,7 +42,6 @@ namespace CServer.Classes.ModuleClasses
                 "π" => Math.Round(PI, Convert.ToInt32(a)),
                 _ => throw new NotImplementedException($"Operator '{@operator}' not recognized"),
             };
-            return request;
         }
     }
 }

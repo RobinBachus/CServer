@@ -60,21 +60,21 @@ namespace CServer
                             break;
                         case Modules.Calculations:
                             Calculations calculations = new();
-                            requestData = calculations.GetResult(requestData);
+                            calculations.GetResult(requestData);
                             break;
                         case Modules.BooleanOperations:
                             BooleanOperations booleanOperations = new();
-                            requestData = booleanOperations.GetResult(requestData);
+                            booleanOperations.GetResult(requestData);
                             break;
                         // Not implemented 
                         case Modules.RandomGenerator:
                             RandomGenerator randomGenerator = new();
-                            requestData = randomGenerator.GetResult(requestData);
+                            randomGenerator.GetResult(requestData);
                             break;
                         // Not implemented 
                         case Modules.Converter:
                             Converter converter = new();
-                            requestData = converter.GetResult(requestData);
+                            converter.GetResult(requestData);
                             break;
                         default:
                             throw new NotImplementedException("Request module was not recognized");
