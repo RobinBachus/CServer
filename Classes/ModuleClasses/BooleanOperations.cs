@@ -19,10 +19,10 @@ namespace CServer.Classes.ModuleClasses
                 throw new NullReferenceException("Parameters array is null");
             }
 
-            BooleanOparationsParamList paramList = new(request);
+            BooleanOperationsParamList paramList = new(request);
             bool result;
 
-            if (paramList.mode == BooleanOparationsParamList.Mode.numbers)
+            if (paramList.mode == BooleanOperationsParamList.Mode.numbers)
             {
                 double a = Convert.ToDouble(paramList.param1);
                 double b = Convert.ToDouble(paramList.param2);

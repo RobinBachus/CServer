@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="operator">The operator to test</param>
         /// <returns><see cref="bool">true</see> if <paramref name="operator"/> takes a single input and <see cref="bool">false</see> if not</returns>
-        public static bool IsSingleInputOpaerator(string @operator)
+        public static bool IsSingleInputOperator(string @operator)
         {
             if (@operator == "√") @operator = "V";
             string[] sIO = Enum.GetNames(typeof(SingleInputOperators));

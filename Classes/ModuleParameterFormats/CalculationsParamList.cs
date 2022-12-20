@@ -25,7 +25,7 @@ namespace CServer.Classes.ModuleParameterFormats
 
             param1 = Convert.ToDouble(request.Parameters[0]);
 
-            if (request.Parameters[1] == "" && !IsSingleInputOpaerator(@operator))
+            if (request.Parameters[1] == "" && !IsSingleInputOperator(@operator))
             {
                 throw new FormatException("Second field empty on an operator that is not single input");
             }

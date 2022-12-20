@@ -3,7 +3,7 @@
 namespace CServer.Classes.ModuleParameterFormats
 {
     /// <inheritdoc/>
-    internal class BooleanOparationsParamList: ParamListBase
+    internal class BooleanOperationsParamList: ParamListBase
     {
         public enum Mode
         {
@@ -12,11 +12,11 @@ namespace CServer.Classes.ModuleParameterFormats
         }
 
         /// <summary>
-        /// Initiates a new <see cref="BooleanOparationsParamList"/> using the parameters from a <see cref="RequestData"/> object
+        /// Initiates a new <see cref="BooleanOperationsParamList"/> using the parameters from a <see cref="RequestData"/> object
         /// </summary>
         /// <param name="request">The request that holds the parameters</param>
         /// <exception cref="FormatException"></exception>
-        public BooleanOparationsParamList(RequestData request) 
+        public BooleanOperationsParamList(RequestData request) 
         {
             if (request.Parameters == null)
             {
@@ -35,7 +35,7 @@ namespace CServer.Classes.ModuleParameterFormats
             if (param2 == "")
                 param2 = null;
 
-            if (param2 == null && !IsSingleInputOpaerator(@operator))
+            if (param2 == null && !IsSingleInputOperator(@operator))
             {
                 throw new FormatException("Second field empty on an operator that is not single input");
             }
