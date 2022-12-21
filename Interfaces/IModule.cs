@@ -10,11 +10,10 @@ namespace CServer.Interfaces
         /// <summary>
         /// Get the result for the request
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns>The request with the result value set</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="request">The <see cref="RequestData"/> object to get results for</param>
+        /// <exception cref="NotImplementedException">Usually thrown if the user uses a parameter that is to be implemented in the future</exception>
         /// <exception cref="NullReferenceException"></exception>
         /// <exception cref="FormatException"></exception>
-        public RequestData GetResult(RequestData request);
+        public void GetResult(RequestData request);
     }
 }

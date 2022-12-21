@@ -12,17 +12,17 @@ namespace CServer.Classes.ModuleClasses
     /// </summary>
     internal class BooleanOperations : IModule
     {
-        public RequestData GetResult(RequestData request)
+        public void GetResult(RequestData request)
         {
             if (request.Parameters == null)
             {
                 throw new NullReferenceException("Parameters array is null");
             }
 
-            BooleanOparationsParamList paramList = new(request);
+            BooleanOperationsParamList paramList = new(request);
             bool result;
 
-            if (paramList.mode == BooleanOparationsParamList.Mode.numbers)
+            if (paramList.mode == BooleanOperationsParamList.Mode.numbers)
             {
                 double a = Convert.ToDouble(paramList.param1);
                 double b = Convert.ToDouble(paramList.param2);
@@ -48,7 +48,6 @@ namespace CServer.Classes.ModuleClasses
             }
 
             request.Result = result;
-            return request;
         }
 
         /// <summary>
