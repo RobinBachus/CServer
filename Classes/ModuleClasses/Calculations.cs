@@ -14,7 +14,7 @@ namespace CServer.Classes.ModuleClasses
     {
         const decimal PI = 3.1415926535897932384626433832M;
 
-        public void GetResult(RequestData request)
+        public static void GetResult(RequestData request)
         {
             if (request.Parameters == null)
             {

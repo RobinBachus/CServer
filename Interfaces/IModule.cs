@@ -14,6 +14,6 @@ namespace CServer.Interfaces
         /// <exception cref="NotImplementedException">Usually thrown if the user uses a parameter that is to be implemented in the future</exception>
         /// <exception cref="NullReferenceException"></exception>
         /// <exception cref="FormatException"></exception>
-        public void GetResult(RequestData request);
+        public static void GetResult(RequestData request) => throw new NotImplementedException("Converter class not yet available");
     }
 }

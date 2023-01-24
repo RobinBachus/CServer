@@ -12,7 +12,7 @@ namespace CServer.Classes.ModuleClasses
     /// </summary>
     internal class BooleanOperations : IModule
     {
-        public void GetResult(RequestData request)
+        public static void GetResult(RequestData request)
         {
             if (request.Parameters == null)
             {
