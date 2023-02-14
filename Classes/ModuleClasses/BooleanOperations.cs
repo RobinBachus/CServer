@@ -55,7 +55,7 @@ namespace CServer.Classes.ModuleClasses
         /// </summary>
         /// <param name="a">The number to test</param>
         /// <returns><see cref="bool">true</see> if <paramref name="a"/> is prime and <see cref="bool">false</see> if not</returns>
-        protected static bool IsPrime(double a)
+        private static bool IsPrime(double a)
         {
             if (a <= 1) return false;
 

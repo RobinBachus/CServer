@@ -8,7 +8,7 @@
     {
         public enum SingleInputOperators
         {
-            // Using V as √ because it is not allowed in enums
+            // The '√' character is not allowed in enums, so I'm using 'V' as an alternative
             None, V, π, P,
         }
 
